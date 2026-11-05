@@ -1,0 +1,1 @@
+<span {{ $attributes }} style="font-weight:800;font-size:28px;color:#1f2937;">PrintFlow</span>
