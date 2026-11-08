@@ -36,6 +36,43 @@
                             </div>
                         </div>
 
+                        {{-- Maklumat syarikat: dicetak pada invois pelanggan --}}
+                        <div style="margin-top:22px;padding-top:18px;border-top:1px solid #f3f4f6;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
+                                <div>
+                                    <h4 style="font-size:14px;font-weight:700;color:#1f2937;margin:0;">Maklumat Syarikat (Invois)</h4>
+                                    <p style="font-size:12px;color:#6b7280;margin:4px 0 0;">Alamat ini dicetak pada setiap invois PDF yang dimuat turun pelanggan.</p>
+                                </div>
+                                <button type="button" wire:click="copyFromProfile"
+                                        style="background-color:#e0e7ff;color:#4338ca;border:1px solid #a5b4fc;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;">
+                                    Guna alamat dari profil saya
+                                </button>
+                            </div>
+
+                            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;">
+                                <div style="grid-column:1/-1;">
+                                    <label style="{{ $label }}">Alamat Surat Menyurat *</label>
+                                    <textarea wire:model="shop_address" rows="3" class="w-full border-gray-300 rounded-lg text-sm" placeholder="No. unit, jalan, poskod, bandar, negeri"></textarea>
+                                    @error('shop_address') <p style="{{ $err }}">{{ $message }}</p> @enderror
+                                </div>
+                                <div>
+                                    <label style="{{ $label }}">No. Telefon</label>
+                                    <input type="text" wire:model="shop_phone" class="w-full border-gray-300 rounded-lg text-sm" placeholder="012-3456789">
+                                    @error('shop_phone') <p style="{{ $err }}">{{ $message }}</p> @enderror
+                                </div>
+                                <div>
+                                    <label style="{{ $label }}">E-mel</label>
+                                    <input type="email" wire:model="shop_email" class="w-full border-gray-300 rounded-lg text-sm" placeholder="kedai@contoh.com">
+                                    @error('shop_email') <p style="{{ $err }}">{{ $message }}</p> @enderror
+                                </div>
+                                <div>
+                                    <label style="{{ $label }}">No. SSM / Pendaftaran</label>
+                                    <input type="text" wire:model="shop_ssm" class="w-full border-gray-300 rounded-lg text-sm" placeholder="202401234567">
+                                    @error('shop_ssm') <p style="{{ $err }}">{{ $message }}</p> @enderror
+                                </div>
+                            </div>
+                        </div>
+
                         <label style="display:flex;align-items:center;gap:8px;margin-top:16px;font-size:14px;color:#374151;cursor:pointer;">
                             <input type="checkbox" wire:model="allow_registration" class="rounded border-gray-300">
                             Benarkan pelanggan daftar sendiri

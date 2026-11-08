@@ -30,6 +30,7 @@
                                 <th style="{{ $th }}">Rujukan</th>
                                 <th style="{{ $th }}">Status</th>
                                 <th style="{{ $th }}text-align:right;">Jumlah (RM)</th>
+                                <th style="{{ $th }}text-align:right;">Resit</th>
                             </tr></thead>
                             <tbody>
                             @forelse ($topups as $t)
@@ -44,9 +45,19 @@
                                         @endif
                                     </td>
                                     <td style="{{ $td }}text-align:right;font-weight:700;color:#059669;">+ {{ number_format($t->amount, 2) }}</td>
+                                    <td style="{{ $td }}text-align:right;white-space:nowrap;">
+                                        @if ($t->status === 'paid')
+                                            <a href="{{ route('receipt.topup', $t->id) }}"
+                                               style="background-color:#059669;color:#ffffff;padding:4px 10px;border-radius:4px;font-size:12px;font-weight:bold;text-decoration:none;display:inline-block;">
+                                                Resit PDF
+                                            </a>
+                                        @else
+                                            <span style="font-size:12px;color:#9ca3af;">&ndash;</span>
+                                        @endif
+                                    </td>
                                 </tr>
                             @empty
-                                <tr><td colspan="4" style="{{ $td }}text-align:center;color:#6b7280;padding:24px;">Belum ada top-up.</td></tr>
+                                <tr><td colspan="5" style="{{ $td }}text-align:center;color:#6b7280;padding:24px;">Belum ada top-up.</td></tr>
                             @endforelse
                             </tbody>
                         </table>

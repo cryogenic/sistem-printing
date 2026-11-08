@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Order;
 use App\Models\Wallet;
 use App\Models\WalletTopup;
+use App\Models\WalletTransaction;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -159,6 +160,13 @@ class ToyyibPay
 
             $wallet = Wallet::where('user_id', $locked->user_id)->lockForUpdate()->firstOrFail();
             $wallet->increment('balance', $locked->amount);
+
+            WalletTransaction::create([
+                'wallet_id'   => $wallet->id,
+                'amount'      => $locked->amount,
+                'type'        => 'credit',
+                'description' => 'Top-up FPX (TOPUP-' . $locked->id . ')',
+            ]);
 
             $locked->update([
                 'status'            => 'paid',

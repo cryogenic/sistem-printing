@@ -5,34 +5,64 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Traits\HasRoles; // Tambah baris ini
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-
-    public function courierAddresses()
-{
-    return $this->hasMany(\App\Models\CourierAddress::class);
-}
-
-public function getAvatarUrlAttribute(): ?string
-{
-    return $this->avatar_path ? asset('storage/' . $this->avatar_path) : null;
-}
-    use HasFactory, Notifiable, HasRoles; // Masukkan HasRoles di sini
+    use HasFactory, Notifiable, HasRoles;
 
     protected $fillable = [
         'name',
         'email',
         'password',
-        'phone', // Tambahan medan telefon
-        'agent_category_id', // Rujukan kategori ejen
+        'phone',
+        'agent_category_id',
+        'avatar_path',
+        'mailing_address',
+        'courier_same_as_mailing',
     ];
-    
-    // ... kod sedia ada yang lain
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at'       => 'datetime',
+            'password'                => 'hashed',
+            'courier_same_as_mailing' => 'boolean',
+        ];
+    }
+
+    protected static function booted(): void
+    {
+        static::created(function (User $user) {
+            Wallet::firstOrCreate(
+                ['user_id' => $user->id],
+                ['balance' => 0]
+            );
+        });
+    }
 
     public function wallet()
     {
         return $this->hasOne(Wallet::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function courierAddresses()
+    {
+        return $this->hasMany(CourierAddress::class);
+    }
+
+    public function getAvatarUrlAttribute(): ?string
+    {
+        return $this->avatar_path ? asset('storage/' . $this->avatar_path) : null;
     }
 }

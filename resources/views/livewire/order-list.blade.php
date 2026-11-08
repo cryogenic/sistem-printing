@@ -119,6 +119,14 @@
                                                     </a>
                                                 @endif
 
+                                                {{-- Invois PDF untuk order yang telah dibayar --}}
+                                                @if($order->payment_status === 'paid')
+                                                    <a href="{{ route('invoice.download', $order->id) }}"
+                                                       style="background-color:#059669;color:#ffffff;padding:4px 12px;border-radius:4px;font-size:12px;font-weight:bold;text-decoration:none;text-align:center;">
+                                                        Invois PDF
+                                                    </a>
+                                                @endif
+
                                                 {{-- Artwork --}}
                                                 @if($order->artwork_path)
                                                     <span class="text-green-600 font-semibold">✅ Artwork Dihantar</span>

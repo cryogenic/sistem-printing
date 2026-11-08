@@ -168,6 +168,24 @@
                             </div>
                         @endif
 
+                        @if ($isPaid)
+                            <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap;">
+                                <a href="{{ route('invoice.download', $order->id) }}"
+                                   style="display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:8px;background-color:#059669;color:#ffffff;font-size:14px;font-weight:700;text-decoration:none;">
+                                    ⬇ Muat Turun Invois (PDF)
+                                </a>
+                                <a href="{{ route('invoice.download', ['order_id' => $order->id, 'preview' => 1]) }}"
+                                   target="_blank"
+                                   style="display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:8px;background-color:#ffffff;color:#059669;border:2px solid #059669;font-size:14px;font-weight:700;text-decoration:none;">
+                                    👁 Lihat Invois
+                                </a>
+                            </div>
+                        @else
+                            <p style="margin-top:20px;padding:12px 14px;background-color:#fef3c7;border:1px solid #fde68a;color:#92400e;border-radius:8px;font-size:13px;font-weight:600;">
+                                Invois PDF akan tersedia selepas pembayaran disahkan.
+                            </p>
+                        @endif
+
                         <div style="margin-top:24px;">
                             <a href="{{ route('orders.list') }}" style="color:#2563eb;font-weight:600;text-decoration:none;font-size:14px;">&larr; Kembali ke Senarai</a>
                         </div>

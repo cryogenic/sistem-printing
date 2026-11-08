@@ -71,9 +71,15 @@
                     <div style="{{ $card }}">
                         <p style="{{ $label }}">Top-Up Terkini</p>
                         @forelse ($history as $h)
-                            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f3f4f6;font-size:14px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f3f4f6;font-size:14px;">
                                 <span style="color:#4b5563;">{{ $h->created_at->format('d/m/Y h:i A') }}</span>
-                                <span style="font-weight:700;color:#059669;">+ RM {{ number_format($h->amount, 2) }}</span>
+                                <span style="display:flex;align-items:center;gap:10px;">
+                                    <span style="font-weight:700;color:#059669;">+ RM {{ number_format($h->amount, 2) }}</span>
+                                    <a href="{{ route('receipt.topup', $h->id) }}"
+                                       style="background-color:#e0f2f1;color:#047857;border:1px solid #6ee7b7;padding:3px 10px;border-radius:4px;font-size:12px;font-weight:bold;text-decoration:none;white-space:nowrap;">
+                                        Resit
+                                    </a>
+                                </span>
                             </div>
                         @empty
                             <p style="font-size:14px;color:#6b7280;margin:0;">Belum ada top-up.</p>

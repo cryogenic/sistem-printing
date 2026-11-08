@@ -7,6 +7,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ToyyibPayController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\FpxController;
+use App\Http\Controllers\TopupReceiptController;
 use App\Livewire\AdminOrderManager;
 use App\Livewire\PrintingCalculator;
 use App\Livewire\OrderList;
@@ -14,6 +15,7 @@ use App\Livewire\OrderSummary;
 use App\Livewire\WalletTopup;
 use App\Livewire\BillingHistory;
 use App\Livewire\AdminSettings;
+use App\Livewire\AdminCustomers;
 
 // Webhook ToyyibPay: DI LUAR group auth (server ToyyibPay tiada sesi)
 Route::post('/toyyibpay/webhook', [FpxController::class, 'webhook'])->name('toyyibpay.webhook');
@@ -22,6 +24,7 @@ Route::post('/toyyibpay/webhook', [FpxController::class, 'webhook'])->name('toyy
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/orders', AdminOrderManager::class)->name('admin.orders');
     Route::get('/admin/settings', AdminSettings::class)->name('admin.settings');
+    Route::get('/admin/customers', AdminCustomers::class)->name('admin.customers');
 });
 
 // Halaman Utama: terus ke dashboard (kalau dah log masuk) atau log masuk
@@ -84,6 +87,9 @@ Route::middleware('auth')->group(function () {
 
     // Invois
     Route::get('/invoice/download/{order_id}', [InvoiceController::class, 'downloadInvoice'])->name('invoice.download');
+
+    // Resit top-up wallet
+    Route::get('/receipt/topup/{topup_id}', [TopupReceiptController::class, 'download'])->name('receipt.topup');
 
     // DataTables lama
     Route::get('/orders-data', [OrderController::class, 'getOrders'])->name('orders.data');
