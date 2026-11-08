@@ -8,16 +8,16 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * Nota: migration ini asalnya ada blok Schema::table('users', ...) di ATAS
+     * Schema::create('users', ...), yang menyebabkan install pada database kosong
+     * gagal (table 'users' belum wujud). Kolum agent_category_id, phone,
+     * company_name dan company_logo juga tidak pernah diwujudkan di database
+     * kerana ralat tersebut — jadi ia tidak dibawa masuk ke sini supaya
+     * `migrate` kekal konsisten dengan schema sedia ada.
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-        $table->foreignId('agent_category_id')->nullable()->constrained('agent_categories');
-        $table->string('phone')->nullable();
-        $table->string('company_name')->nullable();
-        $table->string('company_logo')->nullable(); // Untuk fungsi white-label invois
-    });
-
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -49,8 +49,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('users');
     }
 };
