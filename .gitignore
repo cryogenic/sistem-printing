@@ -25,3 +25,13 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Arahan AI assistant — bukan sebahagian daripada kod sistem
+/AGENTS.md
+/CLAUDE.md
+/.cursorrules
+/.windsurfrules
+
+# Fail debugging sementara
+/debug.php
+/_debug.php
